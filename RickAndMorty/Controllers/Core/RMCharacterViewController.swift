@@ -20,7 +20,15 @@ final class RMCharacterViewController: UIViewController {
             URLQueryItem(name: "status", value: "alive")
         ])
         print(request.url)
+        
+        RMService.shared.execute(.listCharacterResonse, expecting: RMGetAllCharactersResponse.self) { result in
+            switch result{
+            case .success(let model):
+                print("Total pages: " + String(model.info.pages))
+                print("Count: " + String(model.info.count))
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
     }
-
-
 }
